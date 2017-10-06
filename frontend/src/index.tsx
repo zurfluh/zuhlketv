@@ -1,8 +1,35 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import App from './App';
+import { createStore, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import logger from 'redux-logger';
+import { Provider } from 'react-redux';
+import tvBrowserReducer from './reducers';
+import { StoreState } from './types/index';
 import registerServiceWorker from './registerServiceWorker';
+import MainView from './MainView';
+
 import './index.css';
+import 'semantic-ui-css/semantic.min.css';
+
+
+const store = createStore<StoreState>(
+  tvBrowserReducer,
+  applyMiddleware(
+    thunkMiddleware, // lets us return dispatch() functions
+    logger
+  )
+);
+
+class App extends React.Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <MainView/>
+      </Provider>
+    );
+  }
+}
 
 ReactDOM.render(
   <App />,

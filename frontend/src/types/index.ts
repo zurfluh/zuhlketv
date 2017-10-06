@@ -1,3 +1,5 @@
+import { TvShow } from "../services/DiscoverTvShowsService";
+
 
 export interface StoreState {
     tvShowsDiscover: TvShowsDiscoverState;
@@ -8,7 +10,8 @@ export interface StoreState {
 
 export interface TvShowsDiscoverState {
     isFetching: boolean,
-    tvShows: any[],
+    tvShows: TvShow[],
+    hasMore: boolean,
 }
 
 export interface UserState {

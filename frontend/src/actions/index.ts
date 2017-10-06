@@ -13,6 +13,7 @@ export interface RequestDiscoverTvShowsAction {
 export interface ReceiveDiscoverTvShowsAction {
     type: constants.RECEIVE_DISCOVER_TV_SHOWS;
     tvShows: TvShow[];
+    hasMore: boolean;
 }
 
 export type DiscoverTvShowsAction = RequestDiscoverTvShowsAction | ReceiveDiscoverTvShowsAction;
@@ -28,7 +29,8 @@ export const requestDiscoverTvShows = (): RequestDiscoverTvShowsAction => ({
 
 export const receiveDiscoverTvShows = (tvShowResults: TvShowResult): ReceiveDiscoverTvShowsAction => ({
     type: constants.RECEIVE_DISCOVER_TV_SHOWS,
-    tvShows: tvShowResults.results
+    tvShows: tvShowResults.results,
+    hasMore: tvShowResults.page < tvShowResults.total_pages,
 });
 
 export const apiError = (error: Error): ApiErrorAction => ({
@@ -37,14 +39,16 @@ export const apiError = (error: Error): ApiErrorAction => ({
 });
 
 export interface DiscoverFilter {
-    
+    page?: number;
 }
 
 export const fetchDiscoverTvShows = (filter: DiscoverFilter) =>
     (dispatch: Dispatch<DiscoverTvShowsAction>) => {
         dispatch(requestDiscoverTvShows());
 
-        return DiscoverTvShowsService.discoverTvShows({})
+        return DiscoverTvShowsService.discoverTvShows({
+            page: filter.page
+        })
             .then(res => dispatch(receiveDiscoverTvShows(res)))
             .catch(err => dispatch(apiError(err)));
     };

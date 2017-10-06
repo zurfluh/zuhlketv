@@ -4,7 +4,8 @@ import { DiscoverTvShowsAction } from "../actions/index";
 
 const DEFAULT_STATE: TvShowsDiscoverState = {
     isFetching: false,
-    tvShows: []
+    tvShows: [],
+    hasMore: true
 }
 
 export default function tvShowsDiscover(
@@ -15,14 +16,15 @@ export default function tvShowsDiscover(
         case REQUEST_DISCOVER_TV_SHOWS:
             return {
                 ...state,
-                isFetching: true,
-                tvShows: []
+                isFetching: true
             };
         case RECEIVE_DISCOVER_TV_SHOWS:
             return {
                 ...state,
                 isFetching: false,
-                tvShows: action.tvShows
+                // concat already loaded shows with newly loaded ones
+                tvShows: [...state.tvShows, ...action.tvShows],
+                hasMore: action.hasMore
             }
     }
 

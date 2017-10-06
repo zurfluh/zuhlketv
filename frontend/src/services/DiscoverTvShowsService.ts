@@ -1,14 +1,17 @@
 import axios from 'axios';
 
 
-const API_KEY: string = '00e139cee8bd741b03785ab5b22aca5c';
+// const API_KEY: string = '00e139cee8bd741b03785ab5b22aca5c';
 
 
-const TV_SHOWS_BASE_URL = 'https://api.themoviedb.org/3';
+// const TV_SHOWS_BASE_URL = 'https://api.themoviedb.org/3';
+const TV_SHOWS_BASE_URL = 'http://localhost:4000';
+
 
 interface DiscoverTvQuery {
     language?: string;
     sort_by?: string;
+    page?: number;
     // ...
 }
 
@@ -48,7 +51,6 @@ function getRequest(path: string, query: Object = {}): Promise<any> {
         TV_SHOWS_BASE_URL + path,
         {
             params: {
-                api_key: API_KEY,
                 ...query
             }
         }

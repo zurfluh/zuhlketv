@@ -8,7 +8,8 @@ import {bindActionCreators} from 'redux';
 export function mapStateToProps({ tvShowsDiscover }: StoreState) {
     return {
         isFetching: tvShowsDiscover.isFetching,
-        tvShows: tvShowsDiscover.tvShows
+        tvShows: tvShowsDiscover.tvShows,
+        hasMore: tvShowsDiscover.hasMore,
     }
 }
 

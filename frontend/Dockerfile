@@ -17,11 +17,11 @@ EXPOSE 3000
 CMD ["serve", "-s", "build"]
 
 # build this (in the same folder than this file):
-# sudo docker build -t tvbrowser-frontend .
+# sudo docker build -t florianbesser/tvbrowser-frontend .
 
 # preparation for run (execute just once, you probably already did this for the backend)
 # sudo docker network create tvbrowser
 
 # run this:
-# sudo docker run -p 5000:5000 --network tvbrowser --name tvbrowser-frontend tvbrowser-frontend
+# sudo docker run -p 5000:5000 --network tvbrowser --name tvbrowser-frontend florianbesser/tvbrowser-frontend
 

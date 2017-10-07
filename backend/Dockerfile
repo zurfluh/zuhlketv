@@ -16,10 +16,10 @@ EXPOSE 4000
 CMD ["node", "/app/dist/server.js"]
 
 # build this (in the same folder than this file):
-# sudo docker build -t tvbrowser-backend .
+# sudo docker build -t florianbesser/tvbrowser-backend .
 
 # preparation for run (execute just once)
 # sudo docker network create tvbrowser
 
 # run this:
-# sudo docker run -p 4000:4000 --network tvbrowser --name tvbrowser-backend tvbrowser-backend
+# sudo docker run -p 4000:4000 --network tvbrowser --name tvbrowser-backend florianbesser/tvbrowser-backend

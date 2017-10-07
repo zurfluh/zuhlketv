@@ -7,29 +7,6 @@ import * as request from "request";
 import * as NodeCache from "node-cache";
 import { Response, Request, NextFunction } from "express";
 
-interface DiscoverTvQuery {
-  language?: string;
-  sort_by?: string;
-  'air_date.gte'?: string;
-  'air_date.lte'?: string;
-  'first_air_date.gte'?: string;
-  'first_air_date.lte'?: string;
-  first_air_date_year?: number;
-  page?: number;
-  timezone?: string;
-  'vote_average.gte'?: number;
-  'vote_count.gte'?: number;
-  with_genres?: string;
-  with_networks?: string;
-  without_genres?: string;
-  'with_runtime.gte'?: number;
-  'with_runtime.lte'?: number;
-  include_null_first_air_dates?: boolean;
-  with_original_language?: string;
-  without_keywords?: string;
-  screened_theatrically?: boolean;
-}
-
 interface TvShowResult {
   page: number;
   total_results: number;
@@ -149,7 +126,7 @@ export let getApi = (req: Request, res: Response) => {
   const value = myCache.get<string>( movieUrl.href );
 
   if ( value == undefined ) {
-    console.log(`Didn't find ${movieUrl.href} in cache`);
+    console.log(`Didn"t find ${movieUrl.href} in cache`);
 
     const movieUrlWithKey = appendQuery(movieUrl.href, {
       "api_key": THE_MOVIE_DB_API_KEY
@@ -165,7 +142,7 @@ export let getApi = (req: Request, res: Response) => {
   } else {
     console.log(`Found ${movieUrl.href} in cache, ${value.length}`);
 
-    parseResultAndQueryNext(value);
+    parseResultAndQueryNext(movieUrl, value);
 
     res.write(value);
     res.end();
@@ -177,18 +154,50 @@ function handleApiResponse(movieUrl: url.Url, error: any, response: request.Requ
     console.log(`Saving ${movieUrl.href} in cache`);
     myCache.set<string>( movieUrl.href, body );
 
-    parseResultAndQueryNext(body);
+    parseResultAndQueryNext(movieUrl, body);
   } else {
-    console.warn(`Error ${body}`);
+    console.warn(`Error during fetch of ${movieUrl.href}: ${body}`);
   }
+
+  return body;
 }
 
-function parseResultAndQueryNext(body: string) {
-  const tvShowResult = <TvShowResult>JSON.parse(body);
+function parseResultAndQueryNext(movieUrl: url.Url, body: string) {
+  if (movieUrl.href.includes("discover/tv")) {
+    // Discover result
+    const tvShowResult = <TvShowResult>JSON.parse(body);
 
-  // Fetch the next 5 pages
-  for (let i = 1; i <= 5; i++) {
-    queryAndSave(url.parse(`${THE_MOVIE_DB_API_BASE}/discover/tv?page=${tvShowResult.page + i}`));
+    // Fetch the next 5 pages
+    for (let i = 1; i <= 5; i++) {
+      queryAndSave(url.parse(`${THE_MOVIE_DB_API_BASE}/discover/tv?page=${tvShowResult.page + i}`));
+    }
+
+    // And fetch the details of every show
+    tvShowResult.results.forEach(function(tvShow) {
+      queryAndSave(url.parse(`${THE_MOVIE_DB_API_BASE}/tv/${tvShow.id}`));
+    });
+  } else if (movieUrl.href.includes("episode")) {
+    // TV Episode, URL looks like /tv/{tv_id}/season/{season_number}/episode/{episode_number}
+    // (No caching available)
+  } else if (movieUrl.href.includes("season")) {
+    // TV Season, URL looks like /tv/{tv_id}/season/{season_number}
+    const tvIdBegin = movieUrl.href.indexOf("tv/") + "tv/".length;
+    const tvIdEnd = movieUrl.href.indexOf("/season/");
+    const tvShowId = parseInt(movieUrl.href.substring(tvIdBegin, tvIdEnd));
+    const tvSeasonDetail = <TvSeasonDetail>JSON.parse(body);
+
+    // Fetch the details of every episode
+    tvSeasonDetail.episodes.forEach(function(episode) {
+      queryAndSave(url.parse(`${THE_MOVIE_DB_API_BASE}/tv/${tvShowId}/season/${tvSeasonDetail.season_number}/episode/${episode.episode_number}`));
+    });
+  } else if (movieUrl.href.includes("tv")) {
+    // TV Show, URL looks like /tv/{tv_id}
+    const tvShowDetail = <TvShowDetail>JSON.parse(body);
+
+    // Fetch the details of every eason
+    tvShowDetail.seasons.forEach(function(season) {
+      queryAndSave(url.parse(`${THE_MOVIE_DB_API_BASE}/tv/${tvShowDetail.id}/season/${season.season_number}`));
+    });
   }
 }
 
@@ -209,7 +218,7 @@ function queryAndSave(toFetch: url.Url) {
 
           myCache.set<string>( toFetch.href, body );
       } else {
-          console.warn(`Error ${body}`);
+          console.warn(`Error during fetch of ${toFetch.href}: ${body}`);
       }
     });
   } else {

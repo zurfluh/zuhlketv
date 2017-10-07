@@ -1,5 +1,5 @@
 import { Dispatch } from 'react-redux';
-import DiscoverTvShowsService, { TvShowResult, TvShow } from '../services/DiscoverTvShowsService';
+import TvShowsService, { TvShowResult, TvShow } from '../services/TvShowsService';
 import * as constants from '../constants';
 
 export interface Action {
@@ -46,7 +46,7 @@ export const fetchDiscoverTvShows = (filter: DiscoverFilter) =>
     (dispatch: Dispatch<DiscoverTvShowsAction>) => {
         dispatch(requestDiscoverTvShows());
 
-        return DiscoverTvShowsService.discoverTvShows({
+        return TvShowsService.discoverTvShows({
             page: filter.page
         })
             .then(res => dispatch(receiveDiscoverTvShows(res)))

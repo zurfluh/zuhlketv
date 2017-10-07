@@ -8,3 +8,7 @@ body {
 .ui.statistics {
   justify-content: space-around;
 }
+
+.ui.cards {
+  justify-content: center;
+}

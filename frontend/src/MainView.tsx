@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Container } from 'semantic-ui-react';
 import { Route } from 'react-router'
 import TvShows from './containers/TvShows';
 import AboutView from './containers/AboutView';
@@ -17,11 +16,11 @@ class MainView extends React.Component {
           <img src={zuehlkeLogo} className='App-logo' alt='logo' />
           <h1>Zühlke TV Shows</h1>
         </div>
-        <Container>
+        <div>
           <Route exact path='/' component={TvShows} />
-          <Route path='/tv/:id' component={TvShowDetailView} />
+          <Route path='/tv/:tvShowId' component={TvShowDetailView} />
           <Route path='/about' component={AboutView} />
-        </Container>
+        </div>
       </div>
     );
   }

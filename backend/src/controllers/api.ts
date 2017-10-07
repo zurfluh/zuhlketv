@@ -10,20 +10,20 @@ import { Response, Request, NextFunction } from "express";
 interface DiscoverTvQuery {
   language?: string;
   sort_by?: string;
-  'air_date.gte'?: string;
-  'air_date.lte'?: string;
-  'first_air_date.gte'?: string;
-  'first_air_date.lte'?: string;
+  "air_date.gte"?: string;
+  "air_date.lte"?: string;
+  "first_air_date.gte"?: string;
+  "first_air_date.lte"?: string;
   first_air_date_year?: number;
   page?: number;
   timezone?: string;
-  'vote_average.gte'?: number;
-  'vote_count.gte'?: number;
+  "vote_average.gte"?: number;
+  "vote_count.gte"?: number;
   with_genres?: string;
   with_networks?: string;
   without_genres?: string;
-  'with_runtime.gte'?: number;
-  'with_runtime.lte'?: number;
+  "with_runtime.gte"?: number;
+  "with_runtime.lte"?: number;
   include_null_first_air_dates?: boolean;
   with_original_language?: string;
   without_keywords?: string;
@@ -149,7 +149,7 @@ export let getApi = (req: Request, res: Response) => {
   const value = myCache.get<string>( movieUrl.href );
 
   if ( value == undefined ) {
-    console.log(`Didn't find ${movieUrl.href} in cache`);
+    console.log(`Didn"t find ${movieUrl.href} in cache`);
 
     const movieUrlWithKey = appendQuery(movieUrl.href, {
       "api_key": THE_MOVIE_DB_API_KEY

@@ -3,6 +3,7 @@ import { Card, Image, Rating } from 'semantic-ui-react';
 import { TvShow } from '../services/TvShowsService';
 
 import './TvShowCard.css';
+import { getImageUrl } from '../services/ImageService';
 
 
 export interface Props {
@@ -29,10 +30,6 @@ export function TvShowCard({ show, onClick }: Props): JSX.Element {
     );
 }
 
-
-function getImageUrl(path: string, size: string = 'w500'): string {
-    return `https://image.tmdb.org/t/p/${size}/${path}`;
-}
 
 const MAX_TEXT_LENGTH = 200;
 const ENDING_CHARACTER = ' ';

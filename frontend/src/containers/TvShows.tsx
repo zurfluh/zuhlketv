@@ -1,9 +1,8 @@
 import { TvShowsOverview } from '../components/TvShows';
-import { fetchDiscoverTvShows } from '../actions/';
+import { fetchDiscoverTvShows, selectTvShow } from '../actions/';
 import { StoreState } from '../types/index';
 import { connect, Dispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { push } from 'react-router-redux';
 
 
 export function mapStateToProps({ tvShowsDiscover }: StoreState) {
@@ -17,7 +16,7 @@ export function mapStateToProps({ tvShowsDiscover }: StoreState) {
 export function mapDispatchToProps(dispatch: Dispatch<any>) {
     return bindActionCreators({
         fetchDiscoverTvShows,
-        navigateToShow: (showId: number) => push(`/tv/${showId}`)
+        navigateToShow: (showId: number) => selectTvShow(showId)
     }, dispatch);
 }
 

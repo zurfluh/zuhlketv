@@ -1,13 +1,5 @@
 import axios from 'axios';
 
-
-// const API_KEY: string = '00e139cee8bd741b03785ab5b22aca5c';
-
-
-// const TV_SHOWS_BASE_URL = 'https://api.themoviedb.org/3';
-const TV_SHOWS_BASE_URL = 'http://localhost:4000';
-
-
 interface DiscoverTvQuery {
     language?: string;
     sort_by?: string;
@@ -47,7 +39,7 @@ export interface TvShow {
     overview: string;
     first_air_date: string;
     origin_country: string[];
-    genre_ids: number[]
+    genre_ids: number[];
     original_language: string;
     vote_count: number;
     name: string;
@@ -134,7 +126,6 @@ export interface TvSeasonDetail {
     season_number: number;
 }
 
-
 const TvShowsService = {
 
     discoverTvShows: (query: DiscoverTvQuery): Promise<TvShowResult> => {
@@ -153,7 +144,7 @@ const TvShowsService = {
 
 function getRequest(path: string, query: Object = {}): Promise<any> {
     return axios.get(
-        TV_SHOWS_BASE_URL + path,
+        path,
         {
             params: {
                 ...query

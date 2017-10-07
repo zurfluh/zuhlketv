@@ -1,9 +1,9 @@
 .App-header {
-  background-color: #222;
+  background-color: rgb(72, 78, 84);
   height: 150px;
   padding: 20px;
   margin-bottom: 20px;
-  color: white;
+  color: rgb(255, 130, 10);
   vertical-align: top;
 }
 
@@ -20,8 +20,20 @@
 }
 
 .App-header h1 {
-  padding-left: 10px;
+  padding-left: 30px;
   display: inline-block;
   position: absolute;
   top: 10px;
+  letter-spacing: 0.18rem;
+}
+
+.ui.dropdown.Language-selector {
+  position: absolute;
+  right: 50px;
+  font-size: 1.4rem;
+}
+
+.ui.dropdown.Language-selector .menu {
+  left: initial;
+  right: 0;
 }

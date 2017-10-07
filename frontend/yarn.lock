@@ -91,6 +91,10 @@
   dependencies:
     redux "*"
 
+"@types/scriptjs@0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@types/scriptjs/-/scriptjs-0.0.2.tgz#09a2287221a7a341fc6b95b005e4bfb2a5403538"
+
 abab@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"
@@ -4772,6 +4776,10 @@ schema-utils@^0.3.0:
   resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-0.3.0.tgz#f5877222ce3e931edae039f17eb3716e7137f8cf"
   dependencies:
     ajv "^5.0.0"
+
+scriptjs@^2.5.8:
+  version "2.5.8"
+  resolved "https://registry.yarnpkg.com/scriptjs/-/scriptjs-2.5.8.tgz#d0c43955c2e6bad33b6e4edf7b53b8965aa7ca5f"
 
 select-hose@^2.0.0:
   version "2.0.0"

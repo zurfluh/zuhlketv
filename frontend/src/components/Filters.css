@@ -1,0 +1,23 @@
+.All-filters {
+    position: absolute;
+    display: inline-block;
+    top: 115px;
+    right: 50px;
+    font-size: 1.3rem;
+}
+
+@media (min-width: 1400px) {
+    .All-filters {
+        right: 350px;
+    }
+}
+
+.All-filters .ui.dropdown .menu {
+    /* left: initial; */
+    right: 0;
+    margin-top: 7px;
+}
+
+.Filter {
+    margin-right: 30px;
+}

@@ -8,10 +8,13 @@ import tvBrowserReducer from './reducers';
 import { StoreState } from './types/index';
 import registerServiceWorker from './registerServiceWorker';
 import MainView from './MainView';
+import ConfigManager from './config';
 
 import './index.css';
 import 'semantic-ui-css/semantic.min.css';
 
+// Trigger the retrieval the config early.
+ConfigManager.getConfig();
 
 const store = createStore<StoreState>(
   tvBrowserReducer,

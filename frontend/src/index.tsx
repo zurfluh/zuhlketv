@@ -5,6 +5,7 @@ import thunkMiddleware from 'redux-thunk';
 import logger from 'redux-logger';
 import { Provider } from 'react-redux';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
+import axios from 'axios';
 
 import createHistory from 'history/createBrowserHistory'
 import tvBrowserReducer from './reducers';
@@ -16,7 +17,15 @@ import ConfigManager from './config';
 import './index.css';
 import 'semantic-ui-css/semantic.min.css';
 
-// Trigger the retrieval the config early.
+// We prepend the base URL from the config to the provided URL. axios requests must be made with just the relative URL.
+axios.interceptors.request.use(interceptorConfig => {
+  return ConfigManager.getConfig().then(appConfig => {
+    interceptorConfig.url = appConfig.TV_SHOWS_BASE_URL + interceptorConfig.url;
+    return interceptorConfig;
+  });
+});
+
+// Trigger the retrieval of the config early.
 ConfigManager.getConfig();
 
 const history = createHistory()

@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-import ConfigManager from '../config';
-
 interface DiscoverTvQuery {
     language?: string;
     sort_by?: string;
@@ -145,16 +143,14 @@ const TvShowsService = {
 }
 
 function getRequest(path: string, query: Object = {}): Promise<any> {
-    return ConfigManager.getConfig().then(config => {
-        return axios.get(
-            config.TV_SHOWS_BASE_URL + path,
-            {
-                params: {
-                    ...query
-                }
+    return axios.get(
+        path,
+        {
+            params: {
+                ...query
             }
-        ).then(response => response.data);
-    });
+        }
+    ).then(response => response.data);
 }
 
 export default TvShowsService;

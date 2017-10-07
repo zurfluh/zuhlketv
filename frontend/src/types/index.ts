@@ -15,6 +15,15 @@ export interface TvShowsDiscoverState {
     isFetching: boolean,
     tvShows: TvShow[],
     hasMore: boolean,
+    filter: DiscoverTvShowsFilter;
+}
+
+export type DiscoverTvSortKey = 'popularity.desc' | 'vote_average.desc' | 'first_air_date.desc';
+export type OriginalLanguageCode = 'en' | 'zh' | 'de';
+
+export interface DiscoverTvShowsFilter {
+    sort: DiscoverTvSortKey;
+    original_language: OriginalLanguageCode;
 }
 
 export interface TvShowsState {

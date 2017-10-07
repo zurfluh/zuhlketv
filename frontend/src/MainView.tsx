@@ -16,7 +16,7 @@ class MainView extends React.Component {
         <div className='App-header'>
           <img src={zuehlkeLogo} className='App-logo' alt='logo' />
           <h1>Zühlke TV Shows</h1>
-          <Filters />
+          <Route exact path='/' component={Filters} />
         </div>
         <div>
           <Route exact path='/' component={TvShows} />

@@ -4,6 +4,9 @@ import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import logger from 'redux-logger';
 import { Provider } from 'react-redux';
+import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
+
+import createHistory from 'history/createBrowserHistory'
 import tvBrowserReducer from './reducers';
 import { StoreState } from './types/index';
 import registerServiceWorker from './registerServiceWorker';
@@ -13,11 +16,14 @@ import './index.css';
 import 'semantic-ui-css/semantic.min.css';
 
 
+const history = createHistory()
+
 const store = createStore<StoreState>(
   tvBrowserReducer,
   applyMiddleware(
     thunkMiddleware, // lets us return dispatch() functions
-    logger
+    logger,
+    routerMiddleware(history)
   )
 );
 
@@ -25,7 +31,9 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <MainView/>
+        <ConnectedRouter history={history}>
+          <MainView/>
+        </ConnectedRouter>
       </Provider>
     );
   }

@@ -1,27 +1,28 @@
 import * as React from 'react';
-import {Card, Image, Rating} from 'semantic-ui-react';
-import { TvShow } from '../services/DiscoverTvShowsService';
+import { Card, Image, Rating } from 'semantic-ui-react';
+import { TvShow } from '../services/TvShowsService';
 
 import './TvShowCard.css';
 
 
 export interface Props {
     show: TvShow;
+    onClick: () => void;
 }
 
-export function TvShowCard({show}: Props): JSX.Element {
+export function TvShowCard({ show, onClick }: Props): JSX.Element {
     return (
-        <Card>
+        <Card link onClick={onClick}>
             <Image src={getImageUrl(show.poster_path)} />
             <Card.Content>
-            <Card.Header>{show.name}</Card.Header>
-            <Card.Meta>{show.first_air_date}</Card.Meta>
-            <Card.Description>
-                {cropText(show.overview)}
-            </Card.Description>
+                <Card.Header>{show.name}</Card.Header>
+                <Card.Meta>{show.first_air_date}</Card.Meta>
+                <Card.Description>
+                    {cropText(show.overview)}
+                </Card.Description>
             </Card.Content>
             <Card.Content extra>
-                <Rating rating={show.vote_average} maxRating={10} disabled/>
+                <Rating rating={show.vote_average} maxRating={10} disabled />
                 <span className='voteCount'>({show.vote_count} votes)</span>
             </Card.Content>
         </Card>

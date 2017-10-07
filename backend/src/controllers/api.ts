@@ -89,29 +89,34 @@ function handleApiResponse(movieUrl: url.Url, error: any, response: request.Requ
 
 function parseResultAndQueryNext(body: string) {
   const tvShowResult = <TvShowResult>JSON.parse(body);
-  const nextPage = tvShowResult.page + 1;
-  const nextPageUrl = url.parse(`${THE_MOVIE_DB_API_BASE}/discover/tv?page=${nextPage}`);
 
-  console.log(`Checking ${nextPageUrl.href} in cache`);
-  const value = myCache.get<string>( nextPageUrl.href );
+  // Fetch the next 5 pages
+  for (let i = 1; i <= 5; i++) {
+    queryAndSave(url.parse(`${THE_MOVIE_DB_API_BASE}/discover/tv?page=${tvShowResult.page + i}`));
+  }
+}
+
+function queryAndSave(toFetch: url.Url) {
+  console.log(`Checking ${toFetch.href} in cache`);
+  const value = myCache.get<string>( toFetch.href );
 
   if ( value == undefined ) {
-    console.log(`Pre-Fetching ${nextPageUrl.href} for future use`);
+    console.log(`Pre-Fetching ${toFetch.href} for future use`);
 
-    const nextPageUrlWithKey = appendQuery(nextPageUrl.href, {
+    const fetchWithKey = appendQuery(toFetch.href, {
       "api_key": THE_MOVIE_DB_API_KEY
     });
 
-    request(nextPageUrlWithKey, undefined, function (error, response: request.RequestResponse, body: string) {
+    request(fetchWithKey, undefined, function (error, response: request.RequestResponse, body: string) {
       if (!error && response.statusCode == 200) {
-          console.log(`Saving ${nextPageUrl.href} in cache`);
+          console.log(`Saving ${toFetch.href} in cache`);
 
-          myCache.set<string>( nextPageUrl.href, body );
+          myCache.set<string>( toFetch.href, body );
       } else {
           console.warn(`Error ${body}`);
       }
     });
   } else {
-    console.log(`Not Pre-Fetching ${nextPageUrl.href} as it was found in cache`);
+    console.log(`Not Pre-Fetching ${toFetch.href} as it was found in cache`);
   }
 }

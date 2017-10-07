@@ -7,7 +7,7 @@ interface Config {
 
 class ConfigManager {
     private static configPromise: Promise<Config> = new Promise((resolve, reject) => {
-        $script('config.js', () => {
+        $script('/config.js', () => {
             // Check whether config was successfully set.
             const config: Config = (window as any).tvbrowser_config;
             if (config) {

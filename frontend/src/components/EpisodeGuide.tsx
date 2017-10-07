@@ -6,6 +6,7 @@ import { getImageUrl } from '../services/ImageService';
 
 export interface EpisodeGuideProps {
     tvShow: TvShowDetail;
+    // FIXME: selectedSeason is a string instead of a number (parsed from string url)
     selectedSeason: number;
     season: TvSeasonDetail | null;
     isFetching: boolean;
@@ -22,7 +23,6 @@ export function EpisodeGuide(props: EpisodeGuideProps): JSX.Element {
 }
 
 function SeasonChooser(props: EpisodeGuideProps): JSX.Element {
-
     return (
         <List horizontal link>
             {props.tvShow.seasons.map(s => (
@@ -34,7 +34,7 @@ function SeasonChooser(props: EpisodeGuideProps): JSX.Element {
                 >
                     {s.season_number === 0
                         ? 'Specials'
-                        : `Season ${s.season_number}`
+                        : 'Season ' + s.season_number
                     }
                 </List.Item>
             ))}
@@ -44,6 +44,10 @@ function SeasonChooser(props: EpisodeGuideProps): JSX.Element {
 
 function SeasonOverview(props: EpisodeGuideProps): JSX.Element | null {
     if (!props.season || props.isFetching) {
+        return <Loader active />;
+    }
+    if (!props.isFetching && props.season.season_number != props.selectedSeason) {
+        props.selectSeason(props.selectedSeason);
         return <Loader active />;
     }
 

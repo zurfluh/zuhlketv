@@ -10,3 +10,8 @@
     bottom: 0;
     z-index: -10000;
 }
+
+.TvShowDetailInfo {
+    position: sticky;
+    top: 20px;
+}

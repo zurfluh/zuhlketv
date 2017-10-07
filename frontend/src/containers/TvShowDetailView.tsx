@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { Header, Image, Loader, Grid, Rating, Statistic, Container, Label } from 'semantic-ui-react';
+import { Header, Image, Divider, Loader, Grid, Rating, Statistic, Container, Label, List } from 'semantic-ui-react';
 import { fetchTvShow, TvShowAction } from '../actions/';
 import { StoreState } from '../types/index';
 import { connect, Dispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { RouteComponentProps, Route } from 'react-router';
-import { Link } from 'react-router-dom';
 import { TvShowDetail } from '../services/TvShowsService';
 import { getImageUrl } from '../services/ImageService';
 import TvShowSeasonDetailView, { TvShowDetailViewUrlParams } from './TvShowSeasonDetailView';
 
 import './TvShowDetailView.css'
+import { BackNavigation } from '../components/BackNavigation';
 
 export interface TvShowDetailViewParams {
     tvShowId: number; // tv show number
@@ -24,6 +24,10 @@ interface TvShowDetailViewProps {
 }
 
 function TvShowDetailView(props: TvShowDetailViewProps): JSX.Element | null {
+    if (!props.show && !props.isFetching) {
+        // directly navigating here
+        props.fetchTvShow(props.showId);
+    }
     if (!props.show || props.isFetching) {
         return <Loader active />;
     }
@@ -40,12 +44,11 @@ function TvShowDetailView(props: TvShowDetailViewProps): JSX.Element | null {
 
     return (
         <div>
-            <Link to='/'>Back</Link>
-            <div>
-                <div className='TvShowDetailBackdrop' style={{ backgroundImage: `url(${getImageUrl(show.backdrop_path, 'w1000')})` }} />
-                <Container>
-                    <Grid stackable>
-                        <Grid.Column width={5}>
+            <div className='TvShowDetailBackdrop' style={{ backgroundImage: `url(${getImageUrl(show.backdrop_path, 'w1000')})` }} />
+            <Container>
+                <Grid stackable>
+                    <Grid.Column width={5}>
+                        <div className='TvShowDetailInfo'>
                             <Image src={getImageUrl(show.poster_path)} />
                             <Statistic.Group widhts={2}>
                                 <Statistic>
@@ -57,23 +60,33 @@ function TvShowDetailView(props: TvShowDetailViewProps): JSX.Element | null {
                                     <Statistic.Label>Run Time</Statistic.Label>
                                 </Statistic>
                             </Statistic.Group>
+                            <Divider hidden />
+                            <Header>Average Rating</Header>
                             <Rating rating={show.vote_average} maxRating={10} disabled />
-                            <div>
+                            <Header>Genres</Header>
+                            <List horizontal>
                                 {show.genres.map(g => (
-                                    <Label key={g.id}>{g.name}</Label>
+                                    <List.Item>
+                                        <Label key={g.id}>{g.name}</Label>
+                                    </List.Item>
                                 ))}
+                            </List>
+                            <div>
+
                             </div>
-                        </Grid.Column>
-                        <Grid.Column width={11}>
-                            <Header>{show.name}</Header>
-                            <Route
-                                path="/tv/:tvShowId/season/:seasonNumber"
-                                component={TvSeasonDetail}
-                            />
-                        </Grid.Column>
-                    </Grid>
-                </Container>
-            </div>
+                            <Divider hidden />
+                            <BackNavigation to='/' caption='Back to Overview' />
+                        </div>
+                    </Grid.Column>
+                    <Grid.Column width={11}>
+                        <Header>{show.name}</Header>
+                        <Route
+                            path="/tv/:tvShowId/season/:seasonNumber"
+                            component={TvSeasonDetail}
+                        />
+                    </Grid.Column>
+                </Grid>
+            </Container>
         </div>
     );
 }

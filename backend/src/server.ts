@@ -54,6 +54,12 @@ app.use((req, res, next) => {
 });
 app.use(express.static(path.join(__dirname, "public"), { maxAge: 31557600000 }));
 
+// Add JSON content type to every response.
+app.use((req, res, next) => {
+  res.header("Content-Type", "application/json; charset=utf-8");
+  next();
+});
+
 /**
  * Exposure of The Movie DB API.
  */

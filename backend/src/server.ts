@@ -22,8 +22,10 @@ dotenv.config({ path: ".env.example" });
 /**
  * Controllers (route handlers).
  */
-import * as homeController from "./controllers/home";
-import * as apiController from "./controllers/api";
+import * as discoverTvController from "./controllers/discoverTv";
+import * as tvController from "./controllers/tv";
+import * as seasonController from "./controllers/season";
+import * as episodeController from "./controllers/episode";
 
 /**
  * Create Express server.
@@ -63,7 +65,10 @@ app.use((req, res, next) => {
 /**
  * Exposure of The Movie DB API.
  */
-app.get("/*", apiController.getApi);
+app.get("/discover/tv", discoverTvController.getApi);
+app.get("/tv/:tv_id", tvController.getApi);
+app.get("/tv/:tv_id/season/:season_number", seasonController.getApi);
+app.get("/tv/:tv_id/season/:season_number/episode/:episode_number", episodeController.getApi);
 
 /**
  * Error Handler. Provides full stack - remove for production

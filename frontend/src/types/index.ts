@@ -1,4 +1,4 @@
-import { TvShow, TvShowDetail, TvSeasonDetail } from "../services/TvShowsService";
+import { TvShowResult, TvShowDetail, TvSeasonDetail } from "../services/TvShowsService";
 import { RouterState } from 'react-router-redux';
 
 export interface StoreState {
@@ -14,7 +14,7 @@ export interface StoreState {
 
 export interface TvShowsDiscoverState {
     isFetching: boolean,
-    tvShows: TvShow[],
+    tvShowResults: TvShowResult[],
     hasMore: boolean,
     filter: DiscoverTvShowsFilter;
 }

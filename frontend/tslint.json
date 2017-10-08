@@ -4,7 +4,6 @@
         "align": [
             true,
             "parameters",
-            "arguments",
             "statements"
         ],
         "ban": false,
@@ -19,8 +18,10 @@
         "indent": [ true, "spaces" ],
         "interface-name": [true, "never-prefix"],
         "jsdoc-format": true,
+        "jsx-no-bind": false,
         "jsx-no-lambda": false,
         "jsx-no-multiline-js": false,
+        "jsx-boolean-value": false,
         "label-position": true,
         "max-line-length": [ true, 120 ],
         "member-ordering": [
@@ -61,7 +62,7 @@
             "check-open-brace",
             "check-whitespace"
         ],
-        "quotemark": [true, "single", "jsx-double"],
+        "quotemark": [true, "single", "jsx-single"],
         "radix": true,
         "semicolon": [true, "always"],
         "switch-default": true,

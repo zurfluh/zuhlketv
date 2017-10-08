@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 import axios from 'axios';
 
-import createHistory from 'history/createBrowserHistory'
+import createHistory from 'history/createBrowserHistory';
 import tvBrowserReducer from './reducers';
 import { StoreState } from './types/index';
 import registerServiceWorker from './registerServiceWorker';
@@ -28,7 +28,7 @@ axios.interceptors.request.use(interceptorConfig => {
 // Trigger the retrieval of the config early.
 ConfigManager.getConfig();
 
-const history = createHistory()
+const history = createHistory();
 
 const store = createStore<StoreState>(
   tvBrowserReducer,

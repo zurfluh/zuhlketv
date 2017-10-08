@@ -9,7 +9,6 @@ export interface BackNavigationProps {
     caption?: string;
 }
 
-
 export function BackNavigation(props: BackNavigationProps): JSX.Element {
     return (
         <Link to={props.to}>

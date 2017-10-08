@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Route } from 'react-router'
+import { Route } from 'react-router';
 import TvShows from './containers/TvShows';
 import AboutView from './containers/AboutView';
 import TvShowDetailView from './containers/TvShowDetailView';

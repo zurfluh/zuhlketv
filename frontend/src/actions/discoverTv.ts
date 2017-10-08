@@ -19,7 +19,8 @@ export interface ChangeDiscoverFilterAction {
     filter: Partial<DiscoverTvShowsFilter>;
 }
 
-export type DiscoverTvShowsAction = RequestDiscoverTvShowsAction | ReceiveDiscoverTvShowsAction | ChangeDiscoverFilterAction;
+export type DiscoverTvShowsAction =
+    RequestDiscoverTvShowsAction | ReceiveDiscoverTvShowsAction | ChangeDiscoverFilterAction;
 
 export const requestDiscoverTvShows = (): RequestDiscoverTvShowsAction => ({
     type: constants.REQUEST_DISCOVER_TV_SHOWS

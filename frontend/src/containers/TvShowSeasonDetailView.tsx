@@ -7,8 +7,7 @@ import { bindActionCreators } from 'redux';
 import { TvSeasonDetail, TvShowDetail } from '../services/TvShowsService';
 import { EpisodeGuide } from '../components/EpisodeGuide';
 
-import './TvShowDetailView.css'
-
+import './TvShowDetailView.css';
 
 export interface TvShowDetailViewUrlParams {
     tvShowId: number;
@@ -22,7 +21,7 @@ export interface TvShowDetailOwnProps {
 interface TvShowSeasonDetailViewProps extends TvShowDetailOwnProps, RouteComponentProps<TvShowDetailViewUrlParams> {
     isFetching: boolean;
     season: TvSeasonDetail | null;
-    selectTvSeason: (showId: number, seasonNumber: number) => any;
+    selectTvSeason: (showId: number, seasonNumber: number) => void;
 }
 
 function TvShowSeasonDetailView(props: TvShowSeasonDetailViewProps): JSX.Element | null {
@@ -38,7 +37,7 @@ function TvShowSeasonDetailView(props: TvShowSeasonDetailViewProps): JSX.Element
                 selectedSeason={seasonNumber}
                 season={props.season}
                 isFetching={props.isFetching}
-                selectSeason={(seasonNumber) => props.selectTvSeason(props.show.id, seasonNumber)}
+                selectSeason={(sn) => props.selectTvSeason(props.show.id, sn)}
             />
         </div>
     );
@@ -52,7 +51,7 @@ export function mapStateToProps(
         isFetching: seasonDetail.isFetching,
         season: seasonDetail.season,
         ...ownProps
-    }
+    };
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<TvShowSeasonAction>) {

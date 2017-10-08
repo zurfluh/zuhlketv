@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Dropdown } from 'semantic-ui-react';
 import { DiscoverTvSortKey, OriginalLanguageCode, StoreState, DiscoverTvShowsFilter } from '../types';
 
-
 import './Filters.css';
 import { bindActionCreators } from 'redux';
 import { Dispatch, connect } from 'react-redux';
@@ -87,14 +86,12 @@ class Filters extends React.Component<FiltersProps> {
   }
 }
 
-
-
 export function mapStateToProps(
   { tvShowsDiscover }: StoreState
 ) {
   return {
     filter: tvShowsDiscover.filter
-  }
+  };
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<DiscoverTvShowsAction>) {

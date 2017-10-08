@@ -15,3 +15,8 @@
     position: sticky;
     top: 20px;
 }
+
+.ui.fluid.button.FavouriteButton {
+    margin-top: 10px;
+    opacity: 0.6;
+}

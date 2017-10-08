@@ -5,16 +5,19 @@ import { TvShow } from '../services/TvShowsService';
 import './TvShowCard.css';
 import { getImageUrl } from '../services/ImageService';
 
-
 export interface Props {
     show: TvShow;
+    isFavorite: boolean;
     onClick: () => void;
 }
 
-export function TvShowCard({ show, onClick }: Props): JSX.Element {
+export function TvShowCard({ show, onClick, isFavorite }: Props): JSX.Element {
     return (
         <Card link onClick={onClick}>
-            <Image src={getImageUrl(show.poster_path)} />
+            <Image
+                src={getImageUrl(show.poster_path)}
+                label={isFavorite && { as: 'a', color: 'purple', corner: 'left', icon: 'heart' }}
+            />
             <Card.Content>
                 <Card.Header>{show.name}</Card.Header>
                 <Card.Meta>{show.first_air_date}</Card.Meta>
@@ -30,12 +33,11 @@ export function TvShowCard({ show, onClick }: Props): JSX.Element {
     );
 }
 
-
 const MAX_TEXT_LENGTH = 200;
 const ENDING_CHARACTER = ' ';
 const CROPPED_END = '...';
 
-function cropText(text: string, maxLength = MAX_TEXT_LENGTH): string {
+function cropText(text: string, maxLength: number = MAX_TEXT_LENGTH): string {
     if (text.length > MAX_TEXT_LENGTH) {
         const subPart = text.substring(0, maxLength + 1);
         const lastWordEnd = subPart.lastIndexOf(ENDING_CHARACTER);

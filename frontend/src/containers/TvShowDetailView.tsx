@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { Header, Image, Divider, Loader, Grid, Rating, Statistic, Container, Label, List } from 'semantic-ui-react';
-import { fetchTvShow, TvShowAction } from '../actions/';
+import {
+    Header, Image, Divider, Loader, Grid, Rating, Statistic, Container, Label, List, Button
+} from 'semantic-ui-react';
+import { fetchTvShow, setFavourite, TvShowAction } from '../actions/';
 import { StoreState } from '../types/index';
 import { connect, Dispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -9,7 +11,7 @@ import { TvShowDetail } from '../services/TvShowsService';
 import { getImageUrl } from '../services/ImageService';
 import TvShowSeasonDetailView, { TvShowDetailViewUrlParams } from './TvShowSeasonDetailView';
 
-import './TvShowDetailView.css'
+import './TvShowDetailView.css';
 import { BackNavigation } from '../components/BackNavigation';
 
 export interface TvShowDetailViewParams {
@@ -20,7 +22,9 @@ interface TvShowDetailViewProps {
     isFetching: boolean;
     showId: number;
     show: TvShowDetail | null;
+    isFavourite: boolean;
     fetchTvShow: (showId: number) => any;
+    setFavourite: (showId: number, favourite: boolean) => void;
 }
 
 function TvShowDetailView(props: TvShowDetailViewProps): JSX.Element | null {
@@ -36,20 +40,26 @@ function TvShowDetailView(props: TvShowDetailViewProps): JSX.Element | null {
     const estimatedRunTimeMin = show.number_of_episodes * show.episode_run_time[0];
     const runTimeString = Math.round(estimatedRunTimeMin / 60) + ' h';
 
-    const TvSeasonDetail = (props: RouteComponentProps<TvShowDetailViewUrlParams>) => {
+    const TvSeasonDetail = (p: RouteComponentProps<TvShowDetailViewUrlParams>) => {
         return (
-            <TvShowSeasonDetailView show={show} {...props} />
+            <TvShowSeasonDetailView show={show} {...p} />
         );
-    }
+    };
 
     return (
         <div>
-            <div className='TvShowDetailBackdrop' style={{ backgroundImage: `url(${getImageUrl(show.backdrop_path, 'w1000')})` }} />
+            <div
+                className='TvShowDetailBackdrop'
+                style={{ backgroundImage: `url(${getImageUrl(show.backdrop_path, 'w1000')})` }}
+            />
             <Container>
                 <Grid stackable>
                     <Grid.Column width={5}>
                         <div className='TvShowDetailInfo'>
-                            <Image src={getImageUrl(show.poster_path)} />
+                            <Image
+                                label={props.isFavourite && { as: 'a', color: 'purple', corner: 'left', icon: 'heart' }}
+                                src={getImageUrl(show.poster_path)}
+                            />
                             <Statistic.Group widhts={2}>
                                 <Statistic>
                                     <Statistic.Value>{show.number_of_episodes}</Statistic.Value>
@@ -60,20 +70,26 @@ function TvShowDetailView(props: TvShowDetailViewProps): JSX.Element | null {
                                     <Statistic.Label>Run Time</Statistic.Label>
                                 </Statistic>
                             </Statistic.Group>
+                            <Button
+                                content={props.isFavourite ? 'Remove from Favourites' : 'Add to Favourites'}
+                                color={props.isFavourite ? 'orange' : 'purple'}
+                                icon={props.isFavourite ? 'cancel' : 'heart'}
+                                fluid={true}
+                                className='FavouriteButton'
+                                onClick={() => props.setFavourite(props.showId, !props.isFavourite)}
+                            />
                             <Divider hidden />
                             <Header>Average Rating</Header>
                             <Rating rating={show.vote_average} maxRating={10} disabled />
                             <Header>Genres</Header>
                             <List horizontal>
                                 {show.genres.map(g => (
-                                    <List.Item>
-                                        <Label key={g.id}>{g.name}</Label>
+                                    <List.Item key={g.id}>
+                                        <Label>{g.name}</Label>
                                     </List.Item>
                                 ))}
                             </List>
-                            <div>
-
-                            </div>
+                            <div />
                             <Divider hidden />
                             <BackNavigation to='/' caption='Back to Overview' />
                         </div>
@@ -81,7 +97,7 @@ function TvShowDetailView(props: TvShowDetailViewProps): JSX.Element | null {
                     <Grid.Column width={11}>
                         <Header>{show.name}</Header>
                         <Route
-                            path="/tv/:tvShowId/season/:seasonNumber"
+                            path='/tv/:tvShowId/season/:seasonNumber'
                             component={TvSeasonDetail}
                         />
                     </Grid.Column>
@@ -92,19 +108,20 @@ function TvShowDetailView(props: TvShowDetailViewProps): JSX.Element | null {
 }
 
 export function mapStateToProps(
-    { tvShows }: StoreState,
+    { tvShows, favourites }: StoreState,
     ownProps: RouteComponentProps<TvShowDetailViewParams>
 ) {
     const showId = ownProps.match.params.tvShowId;
     return {
         isFetching: tvShows.isFetching,
         show: tvShows.shows[showId],
-        showId
-    }
+        showId,
+        isFavourite: favourites[showId]
+    };
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<TvShowAction>) {
-    return bindActionCreators({ fetchTvShow }, dispatch);
+    return bindActionCreators({ fetchTvShow, setFavourite }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TvShowDetailView);

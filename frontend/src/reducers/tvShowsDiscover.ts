@@ -40,7 +40,7 @@ export default function tvShowsDiscover(
                     ...state.filter,
                     ...action.filter
                 },
-                tvShows: [],
+                tvShowResults: [],
                 hasMore: true
             };
         default:

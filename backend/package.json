@@ -46,6 +46,7 @@
     "async": "^2.1.2",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.15.2",
+    "bottleneck": "^1.16.0",
     "compression": "^1.6.2",
     "dotenv": "^2.0.0",
     "errorhandler": "^1.4.3",

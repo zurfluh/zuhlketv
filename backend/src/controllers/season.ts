@@ -45,13 +45,13 @@ interface TvSeasonDetail {
  */
 export let getApi = (req: Request, res: Response) => {
   tvUtil.checkCache(req.originalUrl, function callback(body: string) {
-    parseResultAndQueryNext(body, req.query);
+    parseResultAndQueryNext(body, req.params);
   }).pipe(res);
 };
 
-function parseResultAndQueryNext(body: string, query: any) {
+function parseResultAndQueryNext(body: string, params: any) {
   // TV Season, URL looks like /tv/{tv_id}/season/{season_number}
-  const tvShowId = query.tv_id;
+  const tvShowId = params.tv_id;
   const tvSeasonDetail = <TvSeasonDetail>JSON.parse(body);
 
   // Fetch the details of every episode

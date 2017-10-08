@@ -56,7 +56,10 @@ function TvShowDetailView(props: TvShowDetailViewProps): JSX.Element | null {
                 <Grid stackable>
                     <Grid.Column width={5}>
                         <div className='TvShowDetailInfo'>
-                            <Image src={getImageUrl(show.poster_path)} />
+                            <Image
+                                label={props.isFavourite && { as: 'a', color: 'purple', corner: 'left', icon: 'heart' }}
+                                src={getImageUrl(show.poster_path)}
+                            />
                             <Statistic.Group widhts={2}>
                                 <Statistic>
                                     <Statistic.Value>{show.number_of_episodes}</Statistic.Value>

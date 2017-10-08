@@ -7,13 +7,17 @@ import { getImageUrl } from '../services/ImageService';
 
 export interface Props {
     show: TvShow;
+    isFavorite: boolean;
     onClick: () => void;
 }
 
-export function TvShowCard({ show, onClick }: Props): JSX.Element {
+export function TvShowCard({ show, onClick, isFavorite }: Props): JSX.Element {
     return (
         <Card link onClick={onClick}>
-            <Image src={getImageUrl(show.poster_path)} />
+            <Image
+                src={getImageUrl(show.poster_path)}
+                label={isFavorite && { as: 'a', color: 'purple', corner: 'left', icon: 'heart' }}
+            />
             <Card.Content>
                 <Card.Header>{show.name}</Card.Header>
                 <Card.Meta>{show.first_air_date}</Card.Meta>

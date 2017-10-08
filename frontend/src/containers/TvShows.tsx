@@ -4,11 +4,12 @@ import { StoreState } from '../types/index';
 import { connect, Dispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-export function mapStateToProps({ tvShowsDiscover }: StoreState) {
+export function mapStateToProps({ tvShowsDiscover, favourites }: StoreState) {
     return {
         isFetching: tvShowsDiscover.isFetching,
         tvShowResults: tvShowsDiscover.tvShowResults,
         hasMore: tvShowsDiscover.hasMore,
+        favourites
     };
 }
 

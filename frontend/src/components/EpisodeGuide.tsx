@@ -17,6 +17,7 @@ export function EpisodeGuide(props: EpisodeGuideProps): JSX.Element {
     return (
         <div>
             <SeasonChooser {...props} />
+            <SeasonText {...props} />
             <SeasonOverview {...props} />
         </div>
     );
@@ -39,6 +40,22 @@ function SeasonChooser(props: EpisodeGuideProps): JSX.Element {
                 </List.Item>
             ))}
         </List >
+    );
+}
+
+function SeasonText(props: EpisodeGuideProps): JSX.Element | null {
+    if (!props.season || props.isFetching) {
+        return <Loader active />;
+    }
+    if (!props.isFetching && props.season.season_number != props.selectedSeason) {
+        props.selectSeason(props.selectedSeason);
+        return <Loader active />;
+    }
+
+    return (
+        <div>
+            {props.season.overview}
+        </div>
     );
 }
 

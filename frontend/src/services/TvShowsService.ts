@@ -136,13 +136,13 @@ const TvShowsService = {
         return getRequest(`/tv/${showId}`);
     },
 
-    getTvSeasonDetail: (showId: number, season_number: number): Promise<TvSeasonDetail> => {
-        return getRequest(`/tv/${showId}/season/${season_number}`);
+    getTvSeasonDetail: (showId: number, seasonNumber: number): Promise<TvSeasonDetail> => {
+        return getRequest(`/tv/${showId}/season/${seasonNumber}`);
     }
 
-}
+};
 
-function getRequest(path: string, query: Object = {}): Promise<any> {
+function getRequest<T>(path: string, query: Object = {}): Promise<T> {
     return axios.get(
         path,
         {

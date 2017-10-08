@@ -1,6 +1,6 @@
-import { REQUEST_TV_SEASONS, RECEIVE_TV_SEASONS } from "../constants/index";
-import { TvShowSeasonState } from "../types/index";
-import { TvShowSeasonAction } from "../actions/index";
+import { REQUEST_TV_SEASONS, RECEIVE_TV_SEASONS } from '../constants/index';
+import { TvShowSeasonState } from '../types/index';
+import { TvShowSeasonAction } from '../actions/index';
 
 const DEFAULT_STATE: TvShowSeasonState = {
     selectedShowId: null,
@@ -27,8 +27,8 @@ export default function seasonDetail(
                 ...state,
                 isFetching: false,
                 season: action.season
-            }
+            };
+        default:
+            return state;
     }
-
-    return state;
 }

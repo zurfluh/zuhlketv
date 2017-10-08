@@ -1,6 +1,6 @@
-import { REQUEST_TV_SHOW, RECEIVE_TV_SHOW } from "../constants/index";
-import { TvShowsState } from "../types/index";
-import { TvShowAction } from "../actions/index";
+import { REQUEST_TV_SHOW, RECEIVE_TV_SHOW } from '../constants/index';
+import { TvShowsState } from '../types/index';
+import { TvShowAction } from '../actions/index';
 
 const DEFAULT_STATE: TvShowsState = {
     shows: {},
@@ -25,8 +25,8 @@ export default function tvShowsDiscover(
                     ...state.shows,
                     [action.tvShow.id]: action.tvShow
                 }
-            }
+            };
+        default:
+            return state;
     }
-
-    return state;
 }

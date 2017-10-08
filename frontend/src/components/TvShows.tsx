@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { Card, Loader, Container } from 'semantic-ui-react';
 const InfiniteScroll = require('react-infinite-scroller');
-import { TvShowResult } from "../services/TvShowsService";
+import { TvShowResult } from '../services/TvShowsService';
 import { TvShowCard } from './TvShowCard';
-
 
 export interface Props {
     isFetching: boolean;

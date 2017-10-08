@@ -1,6 +1,7 @@
-import { REQUEST_DISCOVER_TV_SHOWS, RECEIVE_DISCOVER_TV_SHOWS, CHANGE_DISCOVER_FILTER } from "../constants/index";
-import { TvShowsDiscoverState } from "../types/index";
-import { DiscoverTvShowsAction } from "../actions/index";
+import { REQUEST_DISCOVER_TV_SHOWS, RECEIVE_DISCOVER_TV_SHOWS, CHANGE_DISCOVER_FILTER } from '../constants/index';
+import { TvShowsDiscoverState } from '../types/index';
+import { DiscoverTvShowsAction } from '../actions/index';
+import { TvShowResult } from '../services/TvShowsService';
 
 const DEFAULT_STATE: TvShowsDiscoverState = {
     isFetching: false,
@@ -10,7 +11,7 @@ const DEFAULT_STATE: TvShowsDiscoverState = {
         sort: 'popularity.desc',
         original_language: 'en'
     }
-}
+};
 
 export default function tvShowsDiscover(
     state: TvShowsDiscoverState = DEFAULT_STATE,
@@ -27,11 +28,11 @@ export default function tvShowsDiscover(
                 ...state,
                 isFetching: false,
                 // concat already loaded shows with newly loaded ones
-                tvShowResults: [...state.tvShowResults, action.result].sort(function (a, b) {
+                tvShowResults: [...state.tvShowResults, action.result].sort((a: TvShowResult, b: TvShowResult) => {
                     return a.page - b.page;
                 }),
                 hasMore: action.hasMore
-            }
+            };
         case CHANGE_DISCOVER_FILTER:
             return {
                 ...state,
@@ -41,8 +42,8 @@ export default function tvShowsDiscover(
                 },
                 tvShows: [],
                 hasMore: true
-            }
+            };
+        default:
+            return state;
     }
-
-    return state;
 }

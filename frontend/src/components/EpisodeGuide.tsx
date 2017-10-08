@@ -3,14 +3,13 @@ import { Loader, List, Rating, Item } from 'semantic-ui-react';
 import { TvShowDetail, TvSeasonDetail } from '../services/TvShowsService';
 import { getImageUrl } from '../services/ImageService';
 
-
 export interface EpisodeGuideProps {
     tvShow: TvShowDetail;
     // FIXME: selectedSeason is a string instead of a number (parsed from string url)
     selectedSeason: number;
     season: TvSeasonDetail | null;
     isFetching: boolean;
-    selectSeason: (seasonNumber: number) => any;
+    selectSeason: (seasonNumber: number) => void;
 }
 
 export function EpisodeGuide(props: EpisodeGuideProps): JSX.Element {
@@ -82,7 +81,9 @@ function SeasonOverview(props: EpisodeGuideProps): JSX.Element | null {
                                         <Item.Meta>{e.crew.map(c => c.name).join(', ')}</Item.Meta>
                                         <Item.Description>{e.overview}</Item.Description>
                                         {e.air_date && <Item.Extra>Air Date: {e.air_date}</Item.Extra>}
-                                        <Item.Extra><Rating rating={e.vote_average} maxRating={10} disabled /></Item.Extra>
+                                        <Item.Extra>
+                                            <Rating rating={e.vote_average} maxRating={10} disabled />
+                                        </Item.Extra>
                                     </Item.Content>
                                 </Item>
                             </Item.Group>

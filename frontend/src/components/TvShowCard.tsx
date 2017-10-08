@@ -5,7 +5,6 @@ import { TvShow } from '../services/TvShowsService';
 import './TvShowCard.css';
 import { getImageUrl } from '../services/ImageService';
 
-
 export interface Props {
     show: TvShow;
     onClick: () => void;
@@ -30,12 +29,11 @@ export function TvShowCard({ show, onClick }: Props): JSX.Element {
     );
 }
 
-
 const MAX_TEXT_LENGTH = 200;
 const ENDING_CHARACTER = ' ';
 const CROPPED_END = '...';
 
-function cropText(text: string, maxLength = MAX_TEXT_LENGTH): string {
+function cropText(text: string, maxLength: number = MAX_TEXT_LENGTH): string {
     if (text.length > MAX_TEXT_LENGTH) {
         const subPart = text.substring(0, maxLength + 1);
         const lastWordEnd = subPart.lastIndexOf(ENDING_CHARACTER);

@@ -46,7 +46,6 @@ export const selectTvShow = (showId: number) =>
         dispatch(push(`/tv/${showId}/season/${seasonNumber}`));
     };
 
-
 export const fetchTvShow = (showId: number) =>
     (dispatch: Dispatch<TvShowAction>) => {
         dispatch(requestTvShow(showId));

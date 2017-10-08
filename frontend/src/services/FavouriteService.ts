@@ -17,6 +17,6 @@ const FavouriteService = {
     },
 
     getFavourites: () => favourites
-}
+};
 
 export default FavouriteService;

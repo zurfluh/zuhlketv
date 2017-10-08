@@ -1,9 +1,8 @@
-import * as React from  'react'
+import * as React from  'react';
 import { fetchDiscoverTvShows, DiscoverTvShowsAction } from '../actions/';
 import { StoreState } from '../types/index';
 import { connect, Dispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 
 interface AboutViewProps {
 
@@ -22,7 +21,7 @@ export function mapStateToProps({ tvShowsDiscover }: StoreState) {
         isFetching: tvShowsDiscover.isFetching,
         tvShowResults: tvShowsDiscover.tvShowResults,
         hasMore: tvShowsDiscover.hasMore,
-    }
+    };
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<DiscoverTvShowsAction>) {

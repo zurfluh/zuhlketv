@@ -13,9 +13,5 @@ import * as tvUtil from "./tvUtil";
  * List of API examples.
  */
 export let getApi = (req: Request, res: Response) => {
-  tvUtil.checkCache(req.originalUrl, parseResultAndQueryNext).pipe(res);
+  tvUtil.fetch(req.originalUrl).pipe(res);
 };
-
-function parseResultAndQueryNext(body: string) {
-  // No prefetching required
-}

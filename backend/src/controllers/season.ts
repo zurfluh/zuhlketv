@@ -44,7 +44,7 @@ interface TvSeasonDetail {
  * List of API examples.
  */
 export let getApi = (req: Request, res: Response) => {
-  tvUtil.checkCache(req.originalUrl, function callback(body: string) {
+  tvUtil.fetch(req.originalUrl, function callback(body: string) {
     parseResultAndQueryNext(body, req.params);
   }).pipe(res);
 };
@@ -56,6 +56,6 @@ function parseResultAndQueryNext(body: string, params: any) {
 
   // Fetch the details of every episode
   tvSeasonDetail.episodes.forEach(function(episode) {
-    tvUtil.queryAndSave(url.parse(`${tvUtil.THE_MOVIE_DB_API_BASE}/tv/${tvShowId}/season/${tvSeasonDetail.season_number}/episode/${episode.episode_number}`));
+    tvUtil.fetch(`/tv/${tvShowId}/season/${tvSeasonDetail.season_number}/episode/${episode.episode_number}`);
   });
 }

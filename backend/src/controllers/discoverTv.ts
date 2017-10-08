@@ -36,7 +36,7 @@ interface TvShow {
  * List of API examples.
  */
 export let getApi = (req: Request, res: Response) => {
-  tvUtil.checkCache(req.originalUrl, function callback(body: string) {
+  tvUtil.fetch(req.originalUrl, function callback(body: string) {
     parseResultAndQueryNext(body, req.query);
   }).pipe(res);
 };
@@ -47,19 +47,19 @@ function parseResultAndQueryNext(body: string, query: any) {
 
   // Fetch the next 5 pages
   for (let i = 1; i <= 5; i++) {
-    let nextPageUrl = `${tvUtil.THE_MOVIE_DB_API_BASE}/discover/tv?page=${tvShowResult.page + i}`;
+    let nextPageUrl = `/discover/tv?page=${tvShowResult.page + i}`;
     for (const propName in query) {
       if (query.hasOwnProperty(propName) && propName != "page") {
         nextPageUrl += "&" + propName + "=" + query[propName];
       }
     }
-    tvUtil.queryAndSave(url.parse(nextPageUrl));
+    tvUtil.fetch(nextPageUrl);
   }
 
   // And fetch the details of every show
   tvShowResult.results.forEach(function(tvShow) {
-    tvUtil.queryAndSave(url.parse(`${tvUtil.THE_MOVIE_DB_API_BASE}/tv/${tvShow.id}`));
+    tvUtil.fetch(`/tv/${tvShow.id}`);
     // Also fetch the first season, as the GUI will jump straight to season 1 of a series!
-    tvUtil.queryAndSave(url.parse(`${tvUtil.THE_MOVIE_DB_API_BASE}/tv/${tvShow.id}/season/1`));
+    tvUtil.fetch(`/tv/${tvShow.id}/season/1`);
   });
 }

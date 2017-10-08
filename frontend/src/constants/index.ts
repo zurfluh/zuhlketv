@@ -12,6 +12,8 @@ export const REQUEST_TV_SHOW = 'REQUEST_TV_SHOW';
 export type REQUEST_TV_SHOW = typeof REQUEST_TV_SHOW;
 export const RECEIVE_TV_SHOW = 'RECEIVE_TV_SHOW';
 export type RECEIVE_TV_SHOW = typeof RECEIVE_TV_SHOW;
+export const SET_FAVOURITE = 'SET_FAVOURITE';
+export type SET_FAVOURITE = typeof SET_FAVOURITE;
 
 
 export const REQUEST_TV_SEASONS = 'REQUEST_TV_SEASONS';

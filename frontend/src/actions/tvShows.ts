@@ -1,6 +1,7 @@
 import { Dispatch } from 'react-redux';
 import { apiError, fetchTvShowSeason } from '.';
 import TvShowsService, { TvShowDetail } from '../services/TvShowsService';
+import FavouriteService from '../services/FavouriteService';
 import * as constants from '../constants';
 import { push } from 'react-router-redux';
 
@@ -14,6 +15,11 @@ export interface ReceiveTvShowAction {
     tvShow: TvShowDetail;
 }
 
+export interface SetFavouriteAction {
+    type: constants.SET_FAVOURITE;
+    favourites: {[showId: number]: boolean};
+}
+
 export type TvShowAction = RequestTvShowAction | ReceiveTvShowAction;
 
 export const requestTvShow = (showId: number): RequestTvShowAction => ({
@@ -24,6 +30,11 @@ export const requestTvShow = (showId: number): RequestTvShowAction => ({
 export const receiveTvShow = (tvShowDetail: TvShowDetail): ReceiveTvShowAction => ({
     type: constants.RECEIVE_TV_SHOW,
     tvShow: tvShowDetail
+});
+
+export const setFavourites = (favourites: {[showId: number]: boolean}): SetFavouriteAction => ({
+    type: constants.SET_FAVOURITE,
+    favourites
 });
 
 export const selectTvShow = (showId: number) =>
@@ -43,4 +54,10 @@ export const fetchTvShow = (showId: number) =>
         return TvShowsService.getTvShowDetail(showId)
             .then(res => dispatch(receiveTvShow(res)))
             .catch(err => dispatch(apiError(err)));
+    };
+
+export const setFavourite = (showId: number, favourite: boolean) =>
+    (dispatch: Dispatch<SetFavouriteAction>) => {
+        FavouriteService.setFavourite(showId, favourite);
+        return dispatch(setFavourites(FavouriteService.getFavourites()));
     };

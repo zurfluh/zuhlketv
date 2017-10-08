@@ -6,6 +6,7 @@ export interface StoreState {
     tvShows: TvShowsState;
     seasonDetail: TvShowSeasonState;
     episodeDetail: TvShowEpisodeState;
+    favourites: FavouritesState;
     apiError: Error;
     user: UserState;
     router: RouterState;
@@ -46,3 +47,5 @@ export interface TvShowEpisodeState {
 export interface UserState {
 
 }
+
+export type FavouritesState = {[showId: number]: boolean};

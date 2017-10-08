@@ -20,7 +20,7 @@ function AboutView(props: AboutViewProps): JSX.Element {
 export function mapStateToProps({ tvShowsDiscover }: StoreState) {
     return {
         isFetching: tvShowsDiscover.isFetching,
-        tvShows: tvShowsDiscover.tvShows,
+        tvShowResults: tvShowsDiscover.tvShowResults,
         hasMore: tvShowsDiscover.hasMore,
     }
 }

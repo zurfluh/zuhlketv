@@ -1,6 +1,6 @@
 import { Dispatch } from 'react-redux';
 import { apiError } from '.';
-import TvShowsService, { TvShowResult, TvShow } from '../services/TvShowsService';
+import TvShowsService, { TvShowResult } from '../services/TvShowsService';
 import * as constants from '../constants';
 import { DiscoverTvShowsFilter, StoreState } from '../types/index';
 
@@ -10,7 +10,7 @@ export interface RequestDiscoverTvShowsAction {
 
 export interface ReceiveDiscoverTvShowsAction {
     type: constants.RECEIVE_DISCOVER_TV_SHOWS;
-    tvShows: TvShow[];
+    result: TvShowResult;
     hasMore: boolean;
 }
 
@@ -27,7 +27,7 @@ export const requestDiscoverTvShows = (): RequestDiscoverTvShowsAction => ({
 
 export const receiveDiscoverTvShows = (tvShowResults: TvShowResult): ReceiveDiscoverTvShowsAction => ({
     type: constants.RECEIVE_DISCOVER_TV_SHOWS,
-    tvShows: tvShowResults.results,
+    result: tvShowResults,
     hasMore: tvShowResults.page < tvShowResults.total_pages,
 });
 

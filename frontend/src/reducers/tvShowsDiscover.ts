@@ -4,7 +4,7 @@ import { DiscoverTvShowsAction } from "../actions/index";
 
 const DEFAULT_STATE: TvShowsDiscoverState = {
     isFetching: false,
-    tvShows: [],
+    tvShowResults: [],
     hasMore: true,
     filter: {
         sort: 'popularity.desc',
@@ -27,7 +27,9 @@ export default function tvShowsDiscover(
                 ...state,
                 isFetching: false,
                 // concat already loaded shows with newly loaded ones
-                tvShows: [...state.tvShows, ...action.tvShows],
+                tvShowResults: [...state.tvShowResults, action.result].sort(function (a, b) {
+                    return a.page - b.page;
+                }),
                 hasMore: action.hasMore
             }
         case CHANGE_DISCOVER_FILTER:

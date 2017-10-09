@@ -1,4 +1,6 @@
 import * as React from 'react';
+import * as moment from 'moment';
+
 import { Loader, List, Rating, Item } from 'semantic-ui-react';
 import { TvShowDetail, TvSeasonDetail } from '../services/TvShowsService';
 import { getImageUrl } from '../services/ImageService';
@@ -65,8 +67,13 @@ function SeasonOverview(props: EpisodeGuideProps): JSX.Element | null {
                                             <Item.Header>{e.name}</Item.Header>
                                             <Item.Meta>{e.crew.map(c => c.name).join(', ')}</Item.Meta>
                                             <Item.Description>{e.overview}</Item.Description>
-                                            {e.air_date && <Item.Extra>Air Date: {e.air_date}</Item.Extra>}
-                                            <Item.Extra><Rating rating={e.vote_average} maxRating={10} disabled /></Item.Extra>
+                                            {e.air_date &&
+                                                <Item.Extra>
+                                                    Air Date: {moment(e.air_date, 'YYYY-MM-DD').format('ll')}
+                                                </Item.Extra>}
+                                            <Item.Extra>
+                                                <Rating rating={e.vote_average} maxRating={10} disabled />
+                                            </Item.Extra>
                                         </Item.Content>
                                     </Item>
                                 </Item.Group>

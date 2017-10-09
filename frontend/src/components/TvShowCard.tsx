@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Card, Image, Rating } from 'semantic-ui-react';
-import { TvShow } from '../services/TvShowsService';
+import * as moment from 'moment';
 
+import { TvShow } from '../services/TvShowsService';
 import './TvShowCard.css';
 import { getImageUrl } from '../services/ImageService';
 
@@ -21,7 +22,7 @@ export function TvShowCard({ show, onClick, isFavorite }: Props): JSX.Element {
             />
             <Card.Content>
                 <Card.Header>{show.name}</Card.Header>
-                <Card.Meta>{show.first_air_date}</Card.Meta>
+                <Card.Meta>{moment(show.first_air_date, 'YYYY-MM-DD').format('ll')}</Card.Meta>
                 <Card.Description>
                     {cropText(show.overview)}
                 </Card.Description>

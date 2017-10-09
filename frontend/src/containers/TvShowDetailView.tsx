@@ -12,7 +12,6 @@ import { getImageUrl } from '../services/ImageService';
 import TvShowSeasonDetailView, { TvShowDetailViewUrlParams } from './TvShowSeasonDetailView';
 
 import './TvShowDetailView.css';
-import { BackNavigation } from '../components/BackNavigation';
 
 export interface TvShowDetailViewParams {
     tvShowId: number; // tv show number
@@ -89,9 +88,6 @@ function TvShowDetailView(props: TvShowDetailViewProps): JSX.Element | null {
                                     </List.Item>
                                 ))}
                             </List>
-                            <div />
-                            <Divider hidden />
-                            <BackNavigation to='/' caption='Back to Overview' />
                         </div>
                     </Grid.Column>
                     <Grid.Column width={11}>

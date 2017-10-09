@@ -4,6 +4,7 @@ import TvShows from './containers/TvShows';
 import AboutView from './containers/AboutView';
 import TvShowDetailView from './containers/TvShowDetailView';
 import Filters from './components/Filters';
+import { BackNavigation } from './components/BackNavigation';
 
 import './MainView.css';
 
@@ -16,6 +17,10 @@ class MainView extends React.Component {
         <div className='App-header'>
           <img src={zuehlkeLogo} className='App-logo' alt='logo' />
           <h1>Zühlke TV Shows</h1>
+          <Route
+            path='/tv/:tvShowId'
+            render={() => <BackNavigation to='/' caption='Back to Overview' />}
+          />
           <Route exact path='/' component={Filters} />
         </div>
         <div>

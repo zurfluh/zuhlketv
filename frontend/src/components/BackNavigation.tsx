@@ -11,7 +11,7 @@ export interface BackNavigationProps {
 
 export function BackNavigation(props: BackNavigationProps): JSX.Element {
     return (
-        <Link to={props.to}>
+        <Link to={props.to} className='BackNav-link'>
             <Header size='medium'>
                 <Icon name='left chevron' />
                 {props.caption || 'Back'}

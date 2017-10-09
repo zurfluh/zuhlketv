@@ -3,3 +3,19 @@
     font-size: 2.5em;
     font-weight: bold;
 }
+
+a.BackNav-link {
+    position: absolute;
+    top: 110px;
+    left: 220px;
+}
+
+@media (max-width: 420px) {
+    a.BackNav-link {
+        left: 40px;
+    }
+}
+
+a.BackNav-link .ui.medium.header {
+    color: white;
+}

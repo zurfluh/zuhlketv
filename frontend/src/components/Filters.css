@@ -1,7 +1,7 @@
 .All-filters {
     position: absolute;
     display: inline-block;
-    top: 115px;
+    top: 90px;
     right: 50px;
     font-size: 1.3rem;
 }
@@ -19,5 +19,7 @@
 }
 
 .Filter {
-    margin-right: 30px;
+    margin-right: 10px;
+    padding-left: 20px;
+    padding-top: 5px;
 }

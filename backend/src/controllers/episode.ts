@@ -9,5 +9,7 @@ import { Response, Request, NextFunction } from "express";
 import * as tvUtil from "./tvUtil";
 
 export let getApi = (req: Request, res: Response) => {
-  tvUtil.fetch(req.originalUrl, 2).pipe(res);
+  tvUtil.fetch(req.originalUrl, 2, function callback(statusCode: number, body: string) {
+    res.status(statusCode).send(body);
+  });
 };

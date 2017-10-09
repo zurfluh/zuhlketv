@@ -10,16 +10,16 @@ import Bottleneck from "bottleneck";
 export const THE_MOVIE_DB_API_BASE = "https://api.themoviedb.org/3";
 const THE_MOVIE_DB_API_KEY = "00e139cee8bd741b03785ab5b22aca5c";
 
-// limits concurrent requests to 40 and limits time between requests to min 100 ms. This should guarantee we obey our potential 40 requests per second(?) limit.
-const directApiLimiter = new Bottleneck(40, 200, -1, Bottleneck.strategy.LEAK, true);
+// limits concurrent requests to 5 and limits time between requests to min 125 ms. This should often (but not always!) mean we obey our potential 40 requests per second limit.
+const directApiLimiter = new Bottleneck(5, 125, -1, Bottleneck.strategy.LEAK, true);
 const tvCache = new NodeCache( { stdTTL: 3600, checkperiod: 300, useClones: false } );
 
 /**
  * Returns the MovieDB content found at originalUrl as a stream, either from cache, or freshly fetched.
  * @param originalUrl - The URL identifying the content
- * @param parseResultAndQueryNext - optional callback function to be called with the body of the response. Will only be called if the content could be retrieved (either from cache or directly from the API)
+ * @param parseResultAndQueryNext - optional callback function to be called with the body and statusCode of the response. Must handle error cases!
  */
-export let fetch = (originalUrl: string, priority: number, parseResultAndQueryNext?: Function) => {
+export let fetch = (originalUrl: string, priority: number, parseResultAndQueryNext?: (statusCode: number, body: string) => void) => {
   const movieUrl = url.parse(`${THE_MOVIE_DB_API_BASE}${originalUrl}`);
 
     console.log(`Checking ${movieUrl.href} in cache`);
@@ -32,11 +32,7 @@ export let fetch = (originalUrl: string, priority: number, parseResultAndQueryNe
 
       console.log(`Didn't find ${movieUrl.href} in cache, fetching ${movieUrlWithKey}`);
 
-      const fetchResultStream = new Readable();
-      fetchResultStream._read = function noop() {};
       const apiRequestCallback = function(error: any, response: request.RequestResponse, body: string) {
-        fetchResultStream.push(body);
-        fetchResultStream.push(null); // end of the stream
         handleApiResponse(movieUrl, error, response, body, parseResultAndQueryNext);
       };
       const asyncMovieApiCall = function (callback: Function) {
@@ -44,20 +40,12 @@ export let fetch = (originalUrl: string, priority: number, parseResultAndQueryNe
         callback();
       };
       rateLimit(asyncMovieApiCall, priority);
-
-      return fetchResultStream;
     } else {
       console.log(`Found ${movieUrl.href} in cache, length: ${value.length}`);
 
       if (parseResultAndQueryNext) {
-        parseResultAndQueryNext(value);
+        parseResultAndQueryNext(200, value);
       }
-
-      const cacheResultStream = new Readable();
-      cacheResultStream._read = function noop() {};
-      cacheResultStream.push(value);
-      cacheResultStream.push(null); // end of the stream
-      return cacheResultStream;
     }
 };
 
@@ -67,18 +55,19 @@ export let fetch = (originalUrl: string, priority: number, parseResultAndQueryNe
  * @param error - error object, filled in case an error occured
  * @param response - the API response object
  * @param body - the API response body, containing the returned entity
- * @param callback - function to be called with the body iff successful
+ * @param callback - function to be called with the body & statusCode
  */
-const handleApiResponse = (movieUrl: url.Url, error: any, response: request.RequestResponse, body: string, callback?: Function) => {
-  if (!error && response.statusCode == 200) {
+const handleApiResponse = (movieUrl: url.Url, error: any, response: request.RequestResponse, body: string, callback?: (statusCode: number, body: string) => void) => {
+  const statusCode = response.statusCode;
+  if (!error && statusCode == 200) {
     console.log(`Saving ${movieUrl.href} in cache`);
     tvCache.set<string>( movieUrl.href, body );
-
-    if (callback) {
-      callback(body);
-    }
   } else {
     console.warn(`Error during fetch of ${movieUrl.href}: ${body}`);
+  }
+
+  if (callback) {
+    callback(statusCode, body);
   }
 };
 

@@ -40,9 +40,12 @@ interface TvSeasonDetail {
 }
 
 export let getApi = (req: Request, res: Response) => {
-  tvUtil.fetch(req.originalUrl, 1, function callback(body: string) {
-    parseResultAndQueryNext(body, req.params);
-  }).pipe(res);
+  tvUtil.fetch(req.originalUrl, 1, function callback(statusCode: number, body: string) {
+    res.status(statusCode).send(body);
+    if (statusCode === 200) {
+      parseResultAndQueryNext(body, req.params);
+    }
+  });
 };
 
 function parseResultAndQueryNext(body: string, params: any) {

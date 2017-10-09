@@ -18,5 +18,6 @@
 
 ## Authors
 
- - Stefan Zurfluh
  - Dominic Langenegger
+ - Florian Besser
+ - Stefan Zurfluh

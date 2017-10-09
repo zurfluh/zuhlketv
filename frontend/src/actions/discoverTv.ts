@@ -38,7 +38,6 @@ export const changeDiscoverFilter = (filter: Partial<DiscoverTvShowsFilter>): Ch
 });
 
 export const updateDiscoverFilter = (filter: Partial<DiscoverTvShowsFilter>) =>
-    // FIXME: StoreState or DiscoverTvShowsAction as generic?
     (dispatch: Dispatch<StoreState>) => {
         dispatch(changeDiscoverFilter(filter));
         dispatch(fetchDiscoverTvShows({ page: 1 }));

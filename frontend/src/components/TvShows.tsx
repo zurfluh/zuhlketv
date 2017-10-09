@@ -1,16 +1,20 @@
 import * as React from 'react';
+const InfiniteScroll = require('react-infinite-scroller'); // non-conform export in this module
 import { Card, Loader, Container } from 'semantic-ui-react';
-const InfiniteScroll = require('react-infinite-scroller');
+
 import { TvShowResult } from '../services/TvShowsService';
 import { TvShowCard } from './TvShowCard';
 import { FavouritesState } from '../types/index';
+import { PageFilter } from '../actions/index';
 
 export interface Props {
     isFetching: boolean;
     tvShowResults: TvShowResult[];
     hasMore: boolean;
-    fetchDiscoverTvShows: any;
     favourites: FavouritesState;
+    // tslint:disable-next-line
+    fetchDiscoverTvShows: (filter: PageFilter) => any;
+    // tslint:disable-next-line
     navigateToShow: (showId: number) => any;
 }
 

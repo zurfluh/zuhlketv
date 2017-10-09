@@ -1,13 +1,12 @@
 import * as React from 'react';
 import * as moment from 'moment';
-
 import { Loader, List, Rating, Item } from 'semantic-ui-react';
+
 import { TvShowDetail, TvSeasonDetail } from '../services/TvShowsService';
 import { getImageUrl } from '../services/ImageService';
 
 export interface EpisodeGuideProps {
     tvShow: TvShowDetail;
-    // FIXME: selectedSeason is a string instead of a number (parsed from string url)
     selectedSeason: number;
     season: TvSeasonDetail | null;
     isFetching: boolean;
@@ -29,7 +28,7 @@ function SeasonChooser(props: EpisodeGuideProps): JSX.Element {
             {props.tvShow.seasons.map(s => (
                 <List.Item
                     key={s.id}
-                    active={props.selectedSeason == s.season_number}
+                    active={props.selectedSeason === s.season_number}
                     onClick={() => props.selectSeason(s.season_number)}
                     as='a'
                 >
@@ -47,7 +46,7 @@ function SeasonOverview(props: EpisodeGuideProps): JSX.Element | null {
     if (!props.season || props.isFetching) {
         return <Loader active />;
     }
-    if (!props.isFetching && props.season.season_number != props.selectedSeason) {
+    if (!props.isFetching && props.season.season_number !== props.selectedSeason) {
         props.selectSeason(props.selectedSeason);
         return <Loader active />;
     }

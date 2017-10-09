@@ -22,7 +22,7 @@ interface TvShowDetailViewProps {
     showId: number;
     show: TvShowDetail | null;
     isFavourite: boolean;
-    fetchTvShow: (showId: number) => any;
+    fetchTvShow: (showId: number) => void;
     setFavourite: (showId: number, favourite: boolean) => void;
 }
 

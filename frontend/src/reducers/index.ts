@@ -4,6 +4,7 @@ import tvShows from './tvShows';
 import seasonDetail from './seasonDetail';
 import favourites from './favourites';
 import { StoreState } from '../types/index';
+import apiStatus from './apiStatusReducer';
 import { routerReducer } from 'react-router-redux';
 
 const tvBrowserReducer = combineReducers<StoreState>({
@@ -11,7 +12,8 @@ const tvBrowserReducer = combineReducers<StoreState>({
     tvShowsDiscover,
     tvShows,
     seasonDetail,
-    favourites
+    favourites,
+    apiStatus
 });
 
 export default tvBrowserReducer;

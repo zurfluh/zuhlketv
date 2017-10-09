@@ -1,9 +1,9 @@
 import { Dispatch } from 'react-redux';
+import { push } from 'react-router-redux';
 import { apiError, fetchTvShowSeason } from '.';
 import TvShowsService, { TvShowDetail } from '../services/TvShowsService';
 import FavouriteService from '../services/FavouriteService';
 import * as constants from '../constants';
-import { push } from 'react-router-redux';
 
 export interface RequestTvShowAction {
     type: constants.REQUEST_TV_SHOW;

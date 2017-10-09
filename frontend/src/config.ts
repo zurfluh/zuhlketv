@@ -9,6 +9,7 @@ class ConfigManager {
     private static configPromise: Promise<Config> = new Promise((resolve, reject) => {
         $script('/config.js', () => {
             // Check whether config was successfully set.
+            // tslint:disable-next-line
             const config: Config = (window as any).tvbrowser_config;
             if (config) {
                 resolve(config);

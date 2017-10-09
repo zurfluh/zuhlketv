@@ -32,3 +32,5 @@ export type SELECT_TV_EPISODE = typeof SELECT_TV_EPISODE;
 
 export const API_CALL_ERROR = 'API_CALL_ERROR';
 export type API_CALL_ERROR = typeof API_CALL_ERROR;
+export const CLEAR_API_ERROR = 'CLEAR_API_ERROR';
+export type CLEAR_API_ERROR = typeof CLEAR_API_ERROR;

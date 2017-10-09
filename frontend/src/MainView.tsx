@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Route } from 'react-router';
+import GlobalError from './containers/GlobalError';
 import TvShows from './containers/TvShows';
-import AboutView from './containers/AboutView';
 import TvShowDetailView from './containers/TvShowDetailView';
 import Filters from './components/Filters';
 import { BackNavigation } from './components/BackNavigation';
@@ -24,9 +24,9 @@ class MainView extends React.Component {
           <Route exact path='/' component={Filters} />
         </div>
         <div>
+          <GlobalError />
           <Route exact path='/' component={TvShows} />
           <Route path='/tv/:tvShowId' component={TvShowDetailView} />
-          <Route path='/about' component={AboutView} />
         </div>
       </div>
     );

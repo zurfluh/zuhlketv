@@ -10,8 +10,8 @@ import { EpisodeGuide } from '../components/EpisodeGuide';
 import './TvShowDetailView.css';
 
 export interface TvShowDetailViewUrlParams {
-    tvShowId: number;
-    seasonNumber: number;
+    tvShowId: string;
+    seasonNumber: string;
 }
 
 export interface TvShowDetailOwnProps {
@@ -25,7 +25,7 @@ interface TvShowSeasonDetailViewProps extends TvShowDetailOwnProps, RouteCompone
 }
 
 function TvShowSeasonDetailView(props: TvShowSeasonDetailViewProps): JSX.Element | null {
-    const seasonNumber = props.match.params.seasonNumber;
+    const seasonNumber = parseInt(props.match.params.seasonNumber, 10);
     if (!props.season && !props.isFetching) {
         props.selectTvSeason(props.show.id, seasonNumber);
     }

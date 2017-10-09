@@ -1,5 +1,5 @@
-import { TvShowResult, TvShowDetail, TvSeasonDetail } from "../services/TvShowsService";
 import { RouterState } from 'react-router-redux';
+import { TvShowResult, TvShowDetail, TvSeasonDetail } from '../services/TvShowsService';
 
 export interface StoreState {
     tvShowsDiscover: TvShowsDiscoverState;
@@ -7,15 +7,14 @@ export interface StoreState {
     seasonDetail: TvShowSeasonState;
     episodeDetail: TvShowEpisodeState;
     favourites: FavouritesState;
-    apiError: Error;
-    user: UserState;
+    apiStatus: ApiStatusState;
     router: RouterState;
 }
 
 export interface TvShowsDiscoverState {
-    isFetching: boolean,
-    tvShowResults: TvShowResult[],
-    hasMore: boolean,
+    isFetching: boolean;
+    tvShowResults: TvShowResult[];
+    hasMore: boolean;
     filter: DiscoverTvShowsFilter;
 }
 
@@ -44,8 +43,8 @@ export interface TvShowEpisodeState {
     selectedEpisode: number | null;
 }
 
-export interface UserState {
-
+export interface ApiStatusState {
+    error: Error | null;
 }
 
 export type FavouritesState = {[showId: number]: boolean};

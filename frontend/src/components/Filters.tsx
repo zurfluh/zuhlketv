@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Dropdown } from 'semantic-ui-react';
-import { DiscoverTvSortKey, OriginalLanguageCode, StoreState, DiscoverTvShowsFilter } from '../types';
-
-import './Filters.css';
 import { bindActionCreators } from 'redux';
 import { Dispatch, connect } from 'react-redux';
+import { DiscoverTvSortKey, OriginalLanguageCode, StoreState, DiscoverTvShowsFilter } from '../types';
 import { DiscoverTvShowsAction, updateDiscoverFilter } from '../actions';
+
+import './Filters.css';
 
 class Sorting {
   key: DiscoverTvSortKey;
@@ -19,6 +19,7 @@ class Language {
 
 interface FiltersProps {
   filter: DiscoverTvShowsFilter;
+  // tslint:disable-next-line
   updateDiscoverFilter: (filter: Partial<DiscoverTvShowsFilter>) => any;
 }
 

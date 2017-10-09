@@ -13,10 +13,10 @@ export function mapStateToProps({ tvShowsDiscover, favourites }: StoreState) {
     };
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<any>) {
+export function mapDispatchToProps(dispatch: Dispatch<StoreState>) {
     return bindActionCreators({
         fetchDiscoverTvShows,
-        navigateToShow: (showId: number) => selectTvShow(showId)
+        navigateToShow: selectTvShow
     }, dispatch);
 }
 

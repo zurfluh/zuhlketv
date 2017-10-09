@@ -3,8 +3,9 @@ import { Card, Image, Rating } from 'semantic-ui-react';
 import * as moment from 'moment';
 
 import { TvShow } from '../services/TvShowsService';
-import './TvShowCard.css';
 import { getImageUrl } from '../services/ImageService';
+
+import './TvShowCard.css';
 
 export interface Props {
     show: TvShow;

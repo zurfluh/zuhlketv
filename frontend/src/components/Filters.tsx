@@ -25,7 +25,7 @@ interface FiltersProps {
 class Filters extends React.Component<FiltersProps> {
   private sortings: Sorting[] = [
     { key: 'popularity.desc', text: 'Popularity' },
-    { key: 'vote_average.desc', text: 'Votings' },
+    { key: 'vote_average.desc', text: 'Votes' },
     { key: 'first_air_date.desc', text: 'Next Releases' }
   ];
 

@@ -2,3 +2,7 @@
     margin-left: 10px;
     vertical-align: text-bottom;
 }
+
+.predefinedImageDimensions {
+    min-height: 435px;
+}

@@ -25,6 +25,7 @@
   position: absolute;
   top: 10px;
   letter-spacing: 0.18rem;
+  line-height: 2rem;
 }
 
 .ui.dropdown.Language-selector {

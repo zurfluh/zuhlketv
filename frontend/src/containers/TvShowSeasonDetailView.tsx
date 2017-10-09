@@ -1,51 +1,13 @@
-import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { selectTvSeason, TvShowSeasonAction } from '../actions/';
+import { selectTvSeason } from '../actions/';
 import { StoreState } from '../types/index';
 import { connect, Dispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { TvSeasonDetail, TvShowDetail } from '../services/TvShowsService';
-import { EpisodeGuide } from '../components/EpisodeGuide';
-
-import './TvShowDetailView.css';
-
-export interface TvShowDetailViewUrlParams {
-    tvShowId: string;
-    seasonNumber: string;
-}
-
-export interface TvShowDetailOwnProps {
-    show: TvShowDetail;
-}
-
-interface TvShowSeasonDetailViewProps extends TvShowDetailOwnProps, RouteComponentProps<TvShowDetailViewUrlParams> {
-    isFetching: boolean;
-    season: TvSeasonDetail | null;
-    selectTvSeason: (showId: number, seasonNumber: number) => void;
-}
-
-function TvShowSeasonDetailView(props: TvShowSeasonDetailViewProps): JSX.Element | null {
-    const seasonNumber = parseInt(props.match.params.seasonNumber, 10);
-    if (!props.season && !props.isFetching) {
-        props.selectTvSeason(props.show.id, seasonNumber);
-    }
-
-    return (
-        <div>
-            <EpisodeGuide
-                tvShow={props.show}
-                selectedSeason={seasonNumber}
-                season={props.season}
-                isFetching={props.isFetching}
-                selectSeason={(sn) => props.selectTvSeason(props.show.id, sn)}
-            />
-        </div>
-    );
-}
+import { TvSeasonDetail, TvSeasonDetailUrlParams, TvSeasonDetailOwnProps } from '../components/TvSeasonDetail';
 
 export function mapStateToProps(
     { seasonDetail }: StoreState,
-    ownProps: TvShowDetailOwnProps & RouteComponentProps<TvShowDetailViewUrlParams>
+    ownProps: TvSeasonDetailOwnProps & RouteComponentProps<TvSeasonDetailUrlParams>
 ) {
     return {
         isFetching: seasonDetail.isFetching,
@@ -54,10 +16,10 @@ export function mapStateToProps(
     };
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<TvShowSeasonAction>) {
+export function mapDispatchToProps(dispatch: Dispatch<StoreState>) {
     return bindActionCreators({
         selectTvSeason
     }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TvShowSeasonDetailView);
+export default connect(mapStateToProps, mapDispatchToProps)(TvSeasonDetail);

@@ -31,12 +31,8 @@ interface TvShow {
   original_name: string;
 }
 
-/**
- * GET /api
- * List of API examples.
- */
 export let getApi = (req: Request, res: Response) => {
-  tvUtil.fetch(req.originalUrl, function callback(body: string) {
+  tvUtil.fetch(req.originalUrl, 0, function callback(body: string) {
     parseResultAndQueryNext(body, req.query);
   }).pipe(res);
 };
@@ -53,13 +49,13 @@ function parseResultAndQueryNext(body: string, query: any) {
         nextPageUrl += "&" + propName + "=" + query[propName];
       }
     }
-    tvUtil.fetch(nextPageUrl);
+    tvUtil.fetch(nextPageUrl, 5);
   }
 
   // And fetch the details of every show
   tvShowResult.results.forEach(function(tvShow) {
-    tvUtil.fetch(`/tv/${tvShow.id}`);
+    tvUtil.fetch(`/tv/${tvShow.id}`, 7);
     // Also fetch the first season, as the GUI will jump straight to season 1 of a series!
-    tvUtil.fetch(`/tv/${tvShow.id}/season/1`);
+    tvUtil.fetch(`/tv/${tvShow.id}/season/1`, 7);
   });
 }

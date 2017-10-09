@@ -19,7 +19,7 @@ const tvCache = new NodeCache( { stdTTL: 3600, checkperiod: 300, useClones: fals
  * @param originalUrl - The URL identifying the content
  * @param parseResultAndQueryNext - optional callback function to be called with the body of the response. Will only be called if the content could be retrieved (either from cache or directly from the API)
  */
-export let fetch = (originalUrl: string, parseResultAndQueryNext?: Function) => {
+export let fetch = (originalUrl: string, priority: number, parseResultAndQueryNext?: Function) => {
   const movieUrl = url.parse(`${THE_MOVIE_DB_API_BASE}${originalUrl}`);
 
     console.log(`Checking ${movieUrl.href} in cache`);
@@ -43,7 +43,7 @@ export let fetch = (originalUrl: string, parseResultAndQueryNext?: Function) => 
         request(movieUrlWithKey, undefined, apiRequestCallback);
         callback();
       };
-      rateLimit(asyncMovieApiCall);
+      rateLimit(asyncMovieApiCall, priority);
 
       return fetchResultStream;
     } else {
@@ -82,7 +82,7 @@ const handleApiResponse = (movieUrl: url.Url, error: any, response: request.Requ
   }
 };
 
-const rateLimit = (asyncMovieApiCall: (callback: Function) => void) => {
+const rateLimit = (asyncMovieApiCall: (callback: Function) => void, priority: number) => {
   const apiLimiterCallback = function() {
       // NOOP
   };
@@ -91,5 +91,5 @@ const rateLimit = (asyncMovieApiCall: (callback: Function) => void) => {
   const nbRunning = directApiLimiter.nbRunning();
   console.log(`ApiLimiter requesting, queued: ${nbQueued}, running: ${nbRunning}`);
   */
-  directApiLimiter.submit(asyncMovieApiCall, apiLimiterCallback);
+  directApiLimiter.submitPriority(priority, asyncMovieApiCall, apiLimiterCallback);
 };

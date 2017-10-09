@@ -57,12 +57,8 @@ interface TvShowDetail {
   vote_count: number;
 }
 
-/**
- * GET /api
- * List of API examples.
- */
 export let getApi = (req: Request, res: Response) => {
-  tvUtil.fetch(req.originalUrl, parseResultAndQueryNext).pipe(res);
+  tvUtil.fetch(req.originalUrl, 1, parseResultAndQueryNext).pipe(res);
 };
 
 function parseResultAndQueryNext(body: string) {
@@ -71,6 +67,6 @@ function parseResultAndQueryNext(body: string) {
 
   // Fetch the details of every eason
   tvShowDetail.seasons.forEach(function(season) {
-    tvUtil.fetch(`/tv/${tvShowDetail.id}/season/${season.season_number}`);
+    tvUtil.fetch(`/tv/${tvShowDetail.id}/season/${season.season_number}`, 6);
   });
 }

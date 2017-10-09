@@ -3,6 +3,14 @@
     vertical-align: text-bottom;
 }
 
-.predefinedImageDimensions {
+.poster {
     min-height: 435px;
+}
+
+@media (max-width: 620px) {
+    .poster {
+        min-height: unset;
+        width: 50%;
+        align-self: center;
+    }
 }

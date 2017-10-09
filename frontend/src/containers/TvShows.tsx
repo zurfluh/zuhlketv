@@ -9,6 +9,7 @@ export function mapStateToProps({ tvShowsDiscover, favourites }: StoreState) {
         isFetching: tvShowsDiscover.isFetching,
         tvShowResults: tvShowsDiscover.tvShowResults,
         hasMore: tvShowsDiscover.hasMore,
+        filter: tvShowsDiscover.filter,
         favourites
     };
 }

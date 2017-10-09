@@ -24,13 +24,15 @@ export default function tvShowsDiscover(
                 isFetching: true
             };
         case RECEIVE_DISCOVER_TV_SHOWS:
+            // concat already loaded shows with newly loaded ones
+            const sortedResults = [...state.tvShowResults, action.result].sort((a: TvShowResult, b: TvShowResult) => {
+                return a.page - b.page;
+            });
+
             return {
                 ...state,
                 isFetching: false,
-                // concat already loaded shows with newly loaded ones
-                tvShowResults: [...state.tvShowResults, action.result].sort((a: TvShowResult, b: TvShowResult) => {
-                    return a.page - b.page;
-                }),
+                tvShowResults: sortedResults,
                 hasMore: action.hasMore
             };
         case CHANGE_DISCOVER_FILTER:

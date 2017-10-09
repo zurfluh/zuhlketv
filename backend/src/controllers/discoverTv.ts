@@ -32,9 +32,12 @@ interface TvShow {
 }
 
 export let getApi = (req: Request, res: Response) => {
-  tvUtil.fetch(req.originalUrl, 0, function callback(body: string) {
-    parseResultAndQueryNext(body, req.query);
-  }).pipe(res);
+  tvUtil.fetch(req.originalUrl, 0, function callback(statusCode: number, body: string) {
+    res.status(statusCode).send(body);
+    if (statusCode === 200) {
+      parseResultAndQueryNext(body, req.query);
+    }
+  });
 };
 
 function parseResultAndQueryNext(body: string, query: any) {

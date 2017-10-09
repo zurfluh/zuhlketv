@@ -19,7 +19,7 @@ export function TvShowCard({ show, onClick, isFavorite }: Props): JSX.Element {
             <Image
                 src={getImageUrl(show.poster_path)}
                 className='poster'
-                label={isFavorite && { as: 'a', color: 'purple', corner: 'left', icon: 'heart' }}
+                label={isFavorite && { as: 'div', color: 'purple', corner: 'left', icon: 'heart' }}
             />
             <Card.Content>
                 <Card.Header>{show.name}</Card.Header>

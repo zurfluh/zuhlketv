@@ -56,7 +56,8 @@ function TvShowDetailView(props: TvShowDetailViewProps): JSX.Element | null {
                     <Grid.Column width={5}>
                         <div className='TvShowDetailInfo'>
                             <Image
-                                label={props.isFavourite && { as: 'a', color: 'purple', corner: 'left', icon: 'heart' }}
+                                label={props.isFavourite &&
+                                    { as: 'div', color: 'purple', corner: 'left', icon: 'heart' }}
                                 src={getImageUrl(show.poster_path)}
                             />
                             <Statistic.Group widhts={2}>
